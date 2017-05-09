@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Page Title</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+  <![endif]-->
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+ 
+  <header>
+    <h1><a href="index.html">Morse encoder &amp; decoder app</a></h1>
+  </header>
+
+  <div id="charset">
+    <h4>Character set:</h4>
+    <p>
+      0 1 2 3 4 5 6 7 8 9<br>
+      a b c d e f g h i j k l m<br>
+      n o p q r s t u v w x y z<br>
+      . , ? ! - / @ ( )
+    </p>
+  </div><br><br>
+  
+  <div id="container">
+    <textarea id="eng"></textarea>
+    <textarea id="morse"></textarea>
+  </div>
+  <div id="buttons">
+    <button id="toMorse">Convert to Morse code</button>
+    <button id="fromMorse">Convert from Morse code</button>
+  </div>
+  
+  <footer>
+    <p>Made by <a href="https://github.com/thavixt">thavixt</a>.</p>
+  </footer>
+  <!-- fetch & promise polyfill 
+  <script src="js/polyfill/fetch.js"></script>
+  <script src="js/polyfill/promise.js"></script>
+  -->
+  <!-- 
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  -->
+  <script src="js/main.js"></script>
+</body>
+
+</html>
