@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Page Title</title>
+  <title>Morse Code App</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- <link rel="shortcut icon" href="favicon.ico"> -->
@@ -12,44 +12,82 @@
   <!--[if lt IE 9]>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
   <![endif]-->
+  <!--Fonts-->
+  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+  <!--Normalize-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+  <!--Skeleton-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
   <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
 <body>
  
   <header>
-    <h1><a href="index.html">Morse encoder &amp; decoder app</a></h1>
+    <h2><a href="index.html">Morse Code App</a></h2>
+    <p>Encode, decode and play Morse code in your browser</p>
   </header>
 
-  <div id="charset">
-    <h4>Character set:</h4>
-    <p>
-      0 1 2 3 4 5 6 7 8 9<br>
-      a b c d e f g h i j k l m<br>
-      n o p q r s t u v w x y z<br>
-      . , ? ! - / @ ( )
-    </p>
-  </div><br><br>
-  
-  <div id="container">
-    <textarea id="eng"></textarea>
-    <textarea id="morse"></textarea>
-  </div>
-  <div id="buttons">
-    <button id="toMorse">Convert to Morse code</button>
-    <button id="fromMorse">Convert from Morse code</button>
+  <div class="container">
+   
+    <div class="row">
+      <div class="three columns">&nbsp;</div>
+      <div id="charset" class="six columns">
+        <p>Character set:</p>
+        <small>a b c d e f g h i j k l m<br>n o p q r s t u v w x y z<br>0 1 2 3 4 5 6 7 8 9 . , ? ! - / @ ( )</small>
+      </div>
+      <div class="three columns">&nbsp;</div>
+    </div><br>
+    
+    <div class="row ">
+      <div class="six columns">
+        <textarea id="ascii"></textarea>
+        <button id="toMorse">Convert to Morse code</button>
+        <span id="toMorseStatus" class="status">&nbsp;</span>
+      </div>
+      <div class="six columns">
+        <textarea id="morse"></textarea>
+        <button id="toAscii">Convert from Morse code</button>
+        <span id="toAsciiStatus" class="status">&nbsp;</span>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="three columns">&nbsp;</div>
+      <div class="six columns">
+        <button id="play">Play Morse Code</button>
+        <div id="playStatus" class="status">
+          <span id="prevChar"></span>
+          <span id="currentChar"></span>
+          <span id="nextChar"></span>
+        </div>
+      </div>
+      <div class="three columns">&nbsp;</div>
+    </div>
+    
   </div>
   
   <footer>
-    <p>Made by <a href="https://github.com/thavixt">thavixt</a>.</p>
+    <div class="row">
+      <div class="three columns">&nbsp;</div>
+      <div class="six columns">
+        Volume:
+        <span id="volumeIcon"><i class="fa fa-volume-down" aria-hidden="true"></i></span>
+        <br>
+        <input id="volumeControl" type="range" min="0" max="10" value="2">
+      </div>
+      <div class="three columns">&nbsp;</div>
+    </div>
+    <small>Made by <a href="https://github.com/thavixt" target="_blank">thavixt</a>.</small>
+    <br>
+    <small>Inspired by <a href="http://youmightnotneedjquery.com/" target="_blank">You Might Not Need jQuery</a>.</small>
+    <br><br>
   </footer>
   <!-- fetch & promise polyfill 
   <script src="js/polyfill/fetch.js"></script>
   <script src="js/polyfill/promise.js"></script>
   -->
-  <!-- 
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-  -->
+  <script src="https://use.fontawesome.com/c62ff996b8.js"></script>
   <script src="js/main.js"></script>
 </body>
 
