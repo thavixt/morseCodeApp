@@ -19,7 +19,7 @@ var curC = document.getElementById('currentChar');
 var nextC = document.getElementById('nextChar');
 
 // Audio
-var audio = new Audio('/audio/beep.wav');
+var audio = new Audio('audio/beep.wav');
 var volumeControl = document.getElementById('volumeControl');
 
 // Array of valid chars
