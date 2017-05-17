@@ -4,17 +4,15 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
 html {
-  font-size: 10px;
+  font-size: 11px;
 }
-
 body {
   background: whitesmoke;
 }
 
 header {
-  margin: 1em 0em;
+  margin: 1em 0em 5em 0em;
   text-align: center;
 }
 footer {
@@ -24,7 +22,7 @@ footer {
   left: 0;
   width: 100%;
   height: 100%;
-  margin-top: 10em;
+  margin-top: 1em;
 }
 footer .row {
   margin-bottom: 5em;
@@ -37,29 +35,57 @@ a {
 }
 
 #volumeIcon {
-  min-width: 1.5em;
   display: inline-block;
+  cursor: pointer;
+  font-size: 1.9em;
+  width: 1.2em;
 }
 #volumeControl {
 /*  transform: rotate(270deg);*/
   width: 5em;
+  height: 1.5em;
 }
 
-#charset {
-  padding: 1em;
-  text-align: center;
+.charset {
+  padding: 0em 1em;
 }
-#charset p {
+.charset p {
   margin-bottom: 0.5em;
 }
+.charset:first-child {
+  text-align: right;
+}
+.charset:last-child {
+  text-align: left;
+}
 
-textarea {
+.text-container {
+  display: block;
   height: 15em;
+  position: relative;
+}
+textarea {
+  top: 0; left: 0; 
+  height: 100%;
   width: 100%;
   margin: auto;
   resize: none;
   background-color: rgba(0,0,0,0.02);
   font-family: monospace;
+  position: absolute;
+  z-index: 10;
+}
+textarea + div {
+  top: 0; left: 0; 
+  line-height: 6.4em;
+  font-size: 4em;
+  padding-right: 0.1em;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 0;
+  text-align: right;
+  color: rgba(0,0,0,0.04); 
 }
 
 button {
@@ -71,23 +97,41 @@ button {
   display: block;
   text-align: center;
   padding: 0.5em;
-  min-height: 7em;
+}
+
+#player {
+  min-height: 9em;
+}
+#play {
+  
 }
 #playStatus {
-  font-size: 1.5em;
+  display: none;
   font-family: monospace;
+  font-size: 2em;
+  letter-spacing: -10px;
 }
 #playStatus span {
   display: inline-block;
-  width: 3em;
-  min-height: 2em;
   white-space: pre-wrap;
+  height: 1.5em;
+  width: 2em;
   padding: 0;
   margin: 0;
 }
 #currentChar {
-  max-width: 2em;
-  font-size: 1.2em;
-  font-weight: bolder;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
+  max-width: 1em;
+  font-weight: bold;
+  border: 1px solid rgba(0,0,0,0.3);
+}
+#prevChar {}
+#nextChar {}
+
+@media screen and (max-width: 550px) {
+  .text-container {
+    height: 8em;
+  }
+  textarea + div {
+    line-height: 3em;
+  }
 }

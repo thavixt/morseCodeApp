@@ -29,30 +29,27 @@
   </header>
 
   <div class="container">
-   
-    <div class="row">
-      <div class="three columns">&nbsp;</div>
-      <div id="charset" class="six columns">
-        <p>Character set:</p>
-        <small>a b c d e f g h i j k l m<br>n o p q r s t u v w x y z<br>0 1 2 3 4 5 6 7 8 9 . , ? ! - / @ ( )</small>
-      </div>
-      <div class="three columns">&nbsp;</div>
-    </div><br>
     
     <div class="row ">
       <div class="six columns">
-        <textarea id="ascii"></textarea>
-        <button id="toMorse">Convert to Morse code</button>
+        <div class="text-container">
+          <textarea id="ascii"></textarea>
+          <div>ASCII</div>
+        </div>
+        <!--<button id="toMorse">Convert to Morse code</button>-->
         <span id="toMorseStatus" class="status">&nbsp;</span>
       </div>
       <div class="six columns">
-        <textarea id="morse"></textarea>
-        <button id="toAscii">Convert from Morse code</button>
+        <div class="text-container">
+          <textarea id="morse"></textarea>
+          <div>MORSE</div>
+        </div>
+        <!--<button id="toAscii">Convert from Morse code</button>-->
         <span id="toAsciiStatus" class="status">&nbsp;</span>
       </div>
     </div>
     
-    <div class="row">
+    <div id="player" class="row">
       <div class="three columns">&nbsp;</div>
       <div class="six columns">
         <button id="play">Play Morse Code</button>
@@ -71,12 +68,27 @@
     <div class="row">
       <div class="three columns">&nbsp;</div>
       <div class="six columns">
-        Volume:
         <span id="volumeIcon"><i class="fa fa-volume-down" aria-hidden="true"></i></span>
-        <br>
         <input id="volumeControl" type="range" min="0" max="10" value="2">
       </div>
       <div class="three columns">&nbsp;</div>
+    </div>
+    <div class="row">
+      <div class="six columns charset">
+        <p>ASCII character set:</p>
+        <small>
+          a b c d e f g h i j k l m<br>
+          n o p q r s t u v w x y z<br>
+          0 1 2 3 4 5 6 7 8 9 . , ? ! - / @ ( )
+        </small><br><br>
+      </div>
+      <div class="six columns charset">
+        <p>Morse haracter set:</p>
+        <strong>.</strong> <small>(dot)</small>&nbsp;
+        <strong>-</strong> <small>(dash)</small><br>
+        <small>character separator: one space<br>
+          word separator: three spaces</small>
+      </div>
     </div>
     <small>Made by <a href="https://github.com/thavixt" target="_blank">thavixt</a>.</small>
     <br>
