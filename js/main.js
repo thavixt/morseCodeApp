@@ -148,8 +148,8 @@ function morsePlayback(str) {
 
 function checkEnd(str, i) {
   // if it reached the last character
-  if (str.length == i+1) {
-    setTimeout(function() {
+  if (str.length == i + 1) {
+    setTimeout(function () {
       document.getElementById('playStatus').style.display = 'none';
       document.getElementById('play').style.display = 'block';
       console.log('...playback ended.')
