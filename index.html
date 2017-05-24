@@ -24,13 +24,14 @@
 <body>
  
   <header>
-    <h2><a href="index.html">Morse Code App</a></h2>
-    <p>Encode, decode and play Morse code in your browser</p>
+    <h2><a href=".">Morse Code App</a></h2>
+    <p>Encode, decode and play Morse code in your browser!</p>
   </header>
 
   <div class="container">
-    
-    <div class="row ">
+   
+    <!-- textareas -->
+    <div class="row">
       <div class="six columns">
         <div class="text-container">
           <textarea id="ascii"></textarea>
@@ -49,37 +50,50 @@
       </div>
     </div>
     
+    <!-- playback -->
     <div id="player" class="row">
-      <div class="three columns">&nbsp;</div>
-      <div class="six columns">
+      <div class="twelve columns">
         <button id="play">Play Morse Code</button>
-        <div id="playStatus" class="status">
+        <p id="playStatus">
           <span id="prevChar"></span>
           <span id="currentChar"></span>
           <span id="nextChar"></span>
-        </div>
+        </p><br>
+        <!-- audio element -->
+        <audio id="beep">
+          <source src="audio/beep.wav" type="audio/wav">
+          <source src="audio/beep.mp3" type="audio/mpeg">
+          <small>Your browser does not support HTML5 audio.</small>
+        </audio>
       </div>
-      <div class="three columns">&nbsp;</div>
     </div>
     
-  </div>
-  
-  <footer>
-    <div class="row">
-      <div class="three columns">&nbsp;</div>
-      <div class="six columns">
-        <span id="volumeIcon"><i class="fa fa-volume-down" aria-hidden="true"></i></span>
-        <input id="volumeControl" type="range" min="0" max="10" value="2">
+    <!-- controls -->
+    <div class="row controlContainer">
+      <!-- volume control -->
+      <div class="twelve columns">
+        <span id="volumeIcon" class="icon"><i class="fa fa-volume-down" aria-hidden="true"></i></span>
+        <input id="volumeControl" class="control" type="range" min="0" max="10" value="2">
       </div>
-      <div class="three columns">&nbsp;</div>
+      <!-- speed control -->
+      <div class="twelve columns">
+        <span id="speedIcon" class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>&nbsp;
+        <input id="speedControl" class="control" type="range" min="5" max="20" value="10">
+      </div>
+      <div class="twelve columns">
+        <small>Control the playback volume and speed using the sliders.</small>
+      </div>
     </div>
+    
+    <!-- character sets -->
     <div class="row">
       <div class="six columns charset">
         <p>ASCII character set:</p>
         <small>
           a b c d e f g h i j k l m<br>
           n o p q r s t u v w x y z<br>
-          0 1 2 3 4 5 6 7 8 9 . , ? ! - / @ ( )
+          0 1 2 3 4 5 6 7 8 9<br>
+          . , ? ! - / @ ( )
         </small><br><br>
       </div>
       <div class="six columns charset">
@@ -90,11 +104,60 @@
           word separator: three spaces</small>
       </div>
     </div>
+    
+    <!-- conversion tables -->
+    <div class="tableContainer">
+      <h5>Conversion tables</h5><br>
+      <div class="row">
+        <div class="six columns">
+         <!-- letter -->
+          <strong>Letters</strong>
+          <table id="charsTable" class="morseTable">
+            <thead>
+              <tr>
+                <th>Morse code</th>
+                <th>ASCII</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="six columns">
+         <!-- number -->
+          <strong>Numbers</strong>
+          <table id="numsTable" class="morseTable">
+            <thead>
+              <tr>
+                <th>Morse code</th>
+                <th>ASCII</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <!-- symbols -->
+          <strong>Symbols</strong>
+          <table id="specTable" class="morseTable">
+            <thead>
+              <tr>
+                <th>Morse code</th>
+                <th>ASCII</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+  </div><!-- /container -->
+    
+  <footer>
     <small>Made by <a href="https://github.com/thavixt" target="_blank">thavixt</a>.</small>
     <br>
     <small>Inspired by <a href="http://youmightnotneedjquery.com/" target="_blank">You Might Not Need jQuery</a>.</small>
     <br><br>
   </footer>
+  
   <!-- fetch & promise polyfill 
   <script src="js/polyfill/fetch.js"></script>
   <script src="js/polyfill/promise.js"></script>

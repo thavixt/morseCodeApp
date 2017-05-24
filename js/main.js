@@ -15,9 +15,18 @@ const prevC = document.getElementById('prevChar');
 const curC = document.getElementById('currentChar');
 const nextC = document.getElementById('nextChar');
 // Audio
-const audio = new Audio('audio/beep.wav');
+const audio = document.getElementById('beep');
+//const audio = new Audio('audio/beep.mp3');
 const volumeControl = document.getElementById('volumeControl');
 const volumeIcon = document.getElementById('volumeIcon');
+// Playback speed
+var speed = 1;
+const speedControl = document.getElementById('speedControl');
+const speedIcon = document.getElementById('speedIcon');
+// Morse conversion tables
+const charsTable = document.querySelector('#charsTable tbody')
+const numsTable = document.querySelector('#numsTable tbody')
+const specTable = document.querySelector('#specTable tbody')
 
 // Array of valid chars
 const valid = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '.', ',', '?', '!', '-', '/', '@', '(', ')', ' '];
@@ -26,21 +35,36 @@ var morse;
 fetch('json/morse.json')
   .then(blob => blob.json())
   .then(data => morse = data[0])
-  .catch(error => console.log(error.message));
-
+  .then(morse => populateTable(morse))
+  .catch(error => console.log(error));
 
 // FUNCTIONS
+
+// Populate Morse Table
+function populateTable(morse) {
+  for (const key of Object.keys(morse)) {
+    if(/[a-z]/i.test(key)) {
+      charsTable.innerHTML += "<tr><td>"+key+"</td><td>"+morse[key]+"</td></tr>";
+    } else if(/[0-9]/i.test(key)) {
+      numsTable.innerHTML += "<tr><td>"+key+"</td><td>"+morse[key]+"</td></tr>";
+    } else {
+      specTable.innerHTML += "<tr><td>"+key+"</td><td>"+morse[key]+"</td></tr>";
+    }
+  }
+
+}
 
 // Reset beep
 HTMLAudioElement.prototype.stop = function() {
   this.pause();
   this.currentTime = 0.0;
 }
+
 // Check if all characters of a string are convertable to Morse
 function checkChars(string) {
-  let invalidChars = []; // array of invalid chars
-  let isValid = true; // set to false if any char is invalid
-  let s = string.trim().toLowerCase();
+  var invalidChars = []; // array of invalid chars
+  var isValid = true; // set to false if any char is invalid
+  var s = string.trim().toLowerCase();
   s.split('').map( // each char
     s => {
       if (valid.indexOf(s) == -1) { // if not found in the array of valid chars
@@ -49,12 +73,12 @@ function checkChars(string) {
       }
     }
   )
-  if (isValid) {
+  if (invalidChars.length == 0) {
     // return nothing when everything is OK
     return ""; 
   } else {
     // else return the invalid characters
-    return "Invalid character(s):<br>" + invalidChars.join(" ");
+    return "Invalid character(s):<br>" + invalidChars.join(' ');
   }
 };
 // Morse -> ASCII
@@ -88,13 +112,85 @@ function encode(string) {
     ).join('   ') // words
   }
 };
-// Capitalize the first letter of each sentence
+
+// Capitalize the first letter of each sentence - TODO
 function capitalize(string) {
   return string.split(/[.][ ]*/g).map(w => w[0].toUpperCase() + w.substr(1)).join('. ');
 };
+
+// PLAYBACK
+function morsePlayback(str) {
+  // toggle elements
+  document.getElementById('play').style.display = 'none';
+  prevC.innerHTML = ''; curC.innerHTML = '', nextC.innerHTML = '';
+  document.getElementById('playStatus').style.display = 'block';
+
+  setTimeout(function() {
+    // start promise chain
+    var sequence = Promise.resolve();
+    // split string
+    str.split('').forEach(function(char, i) {
+      sequence = sequence.then(function() {
+        // process the current character
+        return playChar(str, char, i);
+      }).catch(function(err) {
+        // catch any error that happened along the way
+        console.log("Oops: " + err);
+      })
+    })
+  }, 300)
+  console.log("starting playback...");
+}
+function checkEnd(str, i) {
+  // if it reached the last character
+  if (str.length == i + 1) {
+    setTimeout(function () {
+      document.getElementById('playStatus').style.display = 'none';
+      document.getElementById('play').style.display = 'block';
+      console.log('...playback ended.')
+    }, 700)
+  }
+}
+function playChar(str, char, i) {
+  return new Promise(function (resolve, reject) {
+    // character separator - pause - dont play beep
+    if(char === ' ') {
+      // update player status
+      currentPlaying(str, i);
+      setTimeout(function() {
+        // check if its the last char
+        resolve(checkEnd(str, i));
+      }, 400*speed)
+    }
+    // morse character
+    else {
+      // short beep
+      if(char == '.') {
+        dur = 100;
+      } else {
+        // long beep
+        if(char == '-') {
+          dur = 300;
+        } else reject('Invalid character');
+      }
+      setTimeout(function () {
+        // update player status
+        currentPlaying(str, i);
+        // start beep
+        audio.play();
+        setTimeout(function () {
+          // stop beep
+          audio.stop();
+          // check if its the last char
+          resolve(checkEnd(str, i));
+        }, dur*speed)
+      }, 100)
+    }
+  })
+};
 // Update player status
 function currentPlaying(morseCode, i) {
-  switch (i) {
+  /*switch (i) {
     case 0:
       prevC.innerHTML = "&nbsp;";
       curC.innerHTML = morseCode[i];
@@ -120,80 +216,23 @@ function currentPlaying(morseCode, i) {
       curC.innerHTML = morseCode[i];
       nextC.innerHTML = morseCode[i+1] + "&nbsp;&nbsp;" + morseCode[i+2];
       break;
-  }
+  }*/
+
+  var charAt = morseCode;
+  prevC.innerHTML =( charAt[i-6] ? charAt[i-6] : ' ') +
+    (charAt[i-5] ? charAt[i-5] : ' ') +
+    (charAt[i-4] ? charAt[i-4] : ' ') +
+    (charAt[i-3] ? charAt[i-3] : ' ') +
+    (charAt[i-2] ? charAt[i-2] : ' ') +
+    (charAt[i-1] ? charAt[i-1] : ' ');
+  curC.innerHTML = charAt[i] ? charAt[i] : ' ';
+  nextC.innerHTML = (charAt[i+1] ? charAt[i+1] : ' ') +
+    (charAt[i+2] ? charAt[i+2] : ' ') + 
+    (charAt[i+3] ? charAt[i+3] : ' ') + 
+    (charAt[i+4] ? charAt[i+4] : ' ') + 
+    (charAt[i+5] ? charAt[i+5] : ' ') + 
+    (charAt[i+6] ? charAt[i+6] : ' ');
 }
-
-// PLAYBACK
-function morsePlayback(str) {
-  // toggle elements
-  document.getElementById('playStatus').style.display = 'block';
-  document.getElementById('play').style.display = 'none';
-
-  setTimeout(function() {
-    // start promise chain
-    var sequence = Promise.resolve();
-    // split string
-    str.split('').forEach(function(char, i) {
-      sequence = sequence.then(function() {
-        // process the current character
-        return playChar(str, char, i);
-      }).catch(function(err) {
-        // catch any error that happened along the way
-        console.log("Oops: " + err);
-      })
-    })
-  }, 300)
-  console.log("starting playback...");
-}
-
-function checkEnd(str, i) {
-  // if it reached the last character
-  if (str.length == i + 1) {
-    setTimeout(function () {
-      document.getElementById('playStatus').style.display = 'none';
-      document.getElementById('play').style.display = 'block';
-      console.log('...playback ended.')
-    }, 700)
-  }
-}
-function playChar(str, char, i) {
-  return new Promise(function (resolve, reject) {
-    // character separator - pause - dont play beep
-    if(char === ' ') {
-      // update player status
-      currentPlaying(str, i);
-      setTimeout(function() {
-        // check if its the last char
-        resolve(checkEnd(str, i));
-      }, 400)
-    }
-    // morse character
-    else {
-      // short beep
-      if(char == '.') {
-        dur = 100;
-      } else {
-        // long beep
-        if(char == '-') {
-          dur = 300;
-        } else reject('Invalid character');
-      }
-      setTimeout(function () {
-        // update player status
-        currentPlaying(str, i);
-        // start beep
-        audio.play();
-        setTimeout(function () {
-          // stop beep
-          audio.stop();
-          // check if its the last char
-          resolve(checkEnd(str, i));
-        }, dur)
-      }, 100)
-    }
-  })
-};
-
 
 // EVENT LISTENERS
 // input
@@ -213,6 +252,7 @@ toAsciiBtn.addEventListener('click', function() {
 playBtn.addEventListener('click', function() {
   morsePlayback(morseDiv.value);
 });
+// volume controls
 volumeControl.addEventListener('input', function() {
   audio.volume = volumeControl.value / 10;
   if (audio.volume == 0) {
@@ -227,15 +267,29 @@ volumeControl.addEventListener('input', function() {
 });
 volumeIcon.addEventListener('click', function() {
   if(audio.volume == 0) {
-    audio.volume = 0.4;
     volumeControl.value = 4;
     volumeIcon.innerHTML = "<i class='fa fa-volume-down'></i>";
   }
   else {
-    audio.volume = 0;
     volumeControl.value = 0;
     volumeIcon.innerHTML = "<i class='fa fa-volume-off'></i>";
   }
+  audio.volume = volumeControl.value / 10;
+});
+// speed controls
+speedControl.addEventListener('input', function() {
+  speed = 1 / (speedControl.value / 10);
+  console.log('speed: ' + speed);
+});
+speedIcon.addEventListener('click', function() {
+  if (speedControl.value != 10) {
+    speedControl.value = 10;
+  } 
+  else {
+    speedControl.value = 20;
+  }
+  speed = 1 / (speedControl.value / 10);
+  console.log('speed: ' + speed);
 });
 
 // Page load

@@ -16,6 +16,12 @@ header {
   margin: 0em 0em 5em 0em;
   text-align: center;
 }
+.container {
+  text-align: center;
+}
+.container .row {
+  margin-bottom: 4em;
+}
 footer {
   text-align: center;
   position: relative;
@@ -25,39 +31,11 @@ footer {
   height: 100%;
   margin-top: 1em;
 }
-footer .row {
-  margin-bottom: 5em;
-}
 
 a {
   color: inherit;
   text-decoration: none;
   text-shadow: 1px 1px 2px #3c3b3b;
-}
-
-#volumeIcon {
-  display: inline-block;
-  cursor: pointer;
-  font-size: 1.9em;
-  width: 1.2em;
-}
-#volumeControl {
-/*  transform: rotate(270deg);*/
-  width: 5em;
-  height: 1.5em;
-}
-
-.charset {
-  padding: 0em 1em;
-}
-.charset p {
-  margin-bottom: 0.5em;
-}
-.charset:first-child {
-  text-align: right;
-}
-.charset:last-child {
-  text-align: left;
 }
 
 .text-container {
@@ -78,8 +56,8 @@ textarea {
 }
 textarea + div {
   top: 0; left: 0; 
-  line-height: 6.4em;
-  font-size: 4em;
+  line-height: 8.9em;
+  font-size: 3em;
   padding-right: 0.1em;
   height: 100%;
   width: 100%;
@@ -92,48 +70,116 @@ textarea + div {
 button {
   display: block;
   margin: auto;
-  margin-top: 1em;
 }
 .status {
   display: block;
   text-align: center;
   padding: 0.5em;
+  min-height: 4em;
 }
 
 #player {
-  min-height: 9em;
-}
-#play {
-  
+  min-height: 1em;
 }
 #playStatus {
   display: none;
   font-family: monospace;
-  font-size: 2em;
-  letter-spacing: -10px;
+  font-size: 1.4em;
+  letter-spacing: -1px;
+  margin: auto;
 }
 #playStatus span {
   display: inline-block;
-  white-space: pre-wrap;
-  height: 1.5em;
-  width: 2em;
-  padding: 0;
-  margin: 0;
+  height: 1.3em;
+  width: 6em;
+  margin: -7px;
 }
 #currentChar {
   max-width: 1em;
+  margin: -20px;
+  padding-right: 0.4em!important;
+  white-space: pre-wrap;
+  border-bottom: 1px solid rgba(0,0,0,0.3);
+  letter-spacing: -15px;
   font-weight: bold;
-  border: 1px solid rgba(0,0,0,0.3);
-  padding-right: 0.3em!important;
 }
-#prevChar {}
-#nextChar {}
+#prevChar {
+  text-align: right;
+  white-space: pre;
+}
+#nextChar {
+  text-align: left;
+  white-space: pre;
+}
+
+.controlContainer div {
+  margin-bottom: 1em;
+}
+
+.icon {
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.3em;
+  width: 1.2em;
+}
+.control {
+/*  transform: rotate(270deg);*/
+  width: 5em;
+  height: 1em;
+}
+
+.charset {
+  padding: 0em 1em;
+}
+.charset p {
+  margin-bottom: 0.5em;
+}
+.charset:first-child {
+  text-align: right;
+}
+.charset:last-child {
+  text-align: left;
+}
+
+.tableContainer table {
+  margin-top: 1em;
+  margin-bottom: 5em;
+}
+
+.morseTable {
+  margin: auto;
+  width: 100%;
+  max-width: 20em;
+  border-collapse: collapse;
+  margin-top: 0.5em;
+}
+.morseTable th {
+  font-weight: normal;
+  line-height: 2em;
+}
+.morseTable tr:hover {
+  background-color: #F0F0F0;
+}
+.morseTable tbody tr:last-child td {
+  border-bottom: none;
+}
+.morseTable tr * {
+  text-align: center;
+  width: 50%;
+  padding: 0;
+}
+.morseTable tr *:first-child {
+  text-align: center;
+  width: 50%;
+  padding: 0;
+  border-right: 1px solid #E1E1E1;
+}
 
 @media screen and (max-width: 550px) {
   .text-container {
     height: 8em;
   }
   textarea + div {
-    line-height: 3em;
+    line-height: 4.2em;
   }
 }
