@@ -190,34 +190,6 @@ function playChar(str, char, i) {
 };
 // Update player status
 function currentPlaying(morseCode, i) {
-  /*switch (i) {
-    case 0:
-      prevC.innerHTML = "&nbsp;";
-      curC.innerHTML = morseCode[i];
-      nextC.innerHTML = morseCode[i+1];
-      break;
-    case 1:
-      prevC.innerHTML = morseCode[i-1];
-      curC.innerHTML = morseCode[i];
-      nextC.innerHTML = morseCode[i+1] + "&nbsp;&nbsp;" + morseCode[i+2];
-      break;
-    case morseCode.length-2:
-      prevC.innerHTML = morseCode[i-2] + "&nbsp;&nbsp;" + morseCode[i-1];
-      curC.innerHTML = morseCode[i];
-      nextC.innerHTML = morseCode[i+1];
-      break;
-    case morseCode.length-1:
-      prevC.innerHTML = morseCode[i-2] + "&nbsp;&nbsp;" + morseCode[i-1];
-      curC.innerHTML = morseCode[i];
-      nextC.innerHTML = "&nbsp;";
-      break;
-    default:
-      prevC.innerHTML = morseCode[i-2] + "&nbsp;&nbsp;" + morseCode[i-1];
-      curC.innerHTML = morseCode[i];
-      nextC.innerHTML = morseCode[i+1] + "&nbsp;&nbsp;" + morseCode[i+2];
-      break;
-  }*/
-
   var charAt = morseCode;
   prevC.innerHTML =( charAt[i-6] ? charAt[i-6] : ' ') +
     (charAt[i-5] ? charAt[i-5] : ' ') +
