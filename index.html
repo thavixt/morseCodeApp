@@ -1,169 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Morse Code App</title>
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="shortcut icon" href="favicon.ico"> -->
-  <link rel="apple-touch-icon" href="apple-touch-icon.png">
-  <!--[if lt IE 9]>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
-  <![endif]-->
-  <!--Fonts-->
-  <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
-  <!--Normalize-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
-  <!--Skeleton-->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
-  <link rel="stylesheet" type="text/css" href="css/style.css">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Morse Code App</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <!--[if lt IE 9]>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+        <![endif]-->
+        <!--Fonts-->
+        <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+        <!--Normalize-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+        <!--Skeleton-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+    </head>
 
-<body>
- 
-  <header>
-    <h2><a href=".">Morse Code App</a></h2>
-    <p>Encode, decode and play Morse code in your browser!</p>
-  </header>
+    <body>
 
-  <div class="container">
-   
-    <!-- textareas -->
-    <div class="row">
-      <div class="six columns">
-        <div class="text-container">
-          <textarea id="ascii"></textarea>
-          <div>ASCII</div>
+        <header>
+            <h2><a href=".">Morse Code App</a></h2>
+            <p>Encode, decode and play Morse code in your browser!</p>
+        </header>
+
+        <div class="container">
+
+            <!-- textareas -->
+            <div class="row">
+                <div class="six columns">
+                    <div class="text-container">
+                        <textarea id="ascii"></textarea>
+                        <div>ASCII</div>
+                    </div>
+                    <!--<button id="toMorse">Convert to Morse code</button>-->
+                    <span id="toMorseStatus" class="status">&nbsp;</span>
+                </div>
+                <div class="six columns">
+                    <div class="text-container">
+                        <textarea id="morse"></textarea>
+                        <div>MORSE</div>
+                    </div>
+                    <!--<button id="toAscii">Convert from Morse code</button>-->
+                    <span id="toAsciiStatus" class="status">&nbsp;</span>
+                </div>
+            </div>
+
+            <!-- playback -->
+            <div id="player" class="row">
+                <div class="twelve columns">
+                    <button id="play">Play Morse Code</button>
+                    <p id="playStatus">
+                        <span id="prevChar"></span>
+                        <span id="currentChar"></span>
+                        <span id="nextChar"></span>
+                    </p><br>
+                    <!-- audio element -->
+                    <audio id="beep">
+                        <source src="audio/beep.wav" type="audio/wav">
+                        <source src="audio/beep.mp3" type="audio/mpeg">
+                        <small>Your browser does not support HTML5 audio.</small>
+                    </audio>
+                </div>
+            </div>
+
+            <!-- controls -->
+            <div class="row controlContainer">
+                <!-- volume control -->
+                <div class="twelve columns">
+                    <span id="volumeIcon" class="icon"><i class="fa fa-volume-down" aria-hidden="true"></i></span>
+                    <input id="volumeControl" class="control" type="range" min="0" max="10" value="2">
+                </div>
+                <!-- speed control -->
+                <div class="twelve columns">
+                    <span id="speedIcon" class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>&nbsp;
+                    <input id="speedControl" class="control" type="range" min="5" max="20" value="10">
+                </div>
+                <div class="twelve columns">
+                    <small>Control the playback volume and speed using the sliders.</small>
+                </div>
+            </div>
+
+            <!-- character sets -->
+            <div class="row">
+                <div class="six columns charset">
+                    <p>ASCII character set:</p>
+                    <small>
+                        a b c d e f g h i j k l m<br>
+                        n o p q r s t u v w x y z<br>
+                        0 1 2 3 4 5 6 7 8 9<br>
+                        . , ? ! - / @ ( )
+                    </small><br><br>
+                </div>
+                <div class="six columns charset">
+                    <p>Morse character set:</p>
+                    <strong>.</strong> <small>(dot)</small>&nbsp;
+                    <strong>-</strong> <small>(dash)</small><br>
+                    <small>character separator: one space<br>
+                        word separator: three spaces</small>
+                </div>
+            </div>
+
+            <!-- conversion tables -->
+            <div class="tableContainer">
+                <h5>Conversion tables</h5><br>
+                <div class="row">
+                    <div class="six columns">
+                        <!-- letter -->
+                        <strong>Letters</strong>
+                        <table id="charsTable" class="morseTable">
+                            <thead>
+                                <tr>
+                                    <th>ASCII</th>
+                                    <th>Morse code</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="six columns">
+                        <!-- number -->
+                        <strong>Numbers</strong>
+                        <table id="numsTable" class="morseTable">
+                            <thead>
+                                <tr>
+                                    <th>ASCII</th>
+                                    <th>Morse code</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                        <!-- symbols -->
+                        <strong>Symbols</strong>
+                        <table id="specTable" class="morseTable">
+                            <thead>
+                                <tr>
+                                    <th>ASCII</th>
+                                    <th>Morse code</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <!--<button id="toMorse">Convert to Morse code</button>-->
-        <span id="toMorseStatus" class="status">&nbsp;</span>
-      </div>
-      <div class="six columns">
-        <div class="text-container">
-          <textarea id="morse"></textarea>
-          <div>MORSE</div>
-        </div>
-        <!--<button id="toAscii">Convert from Morse code</button>-->
-        <span id="toAsciiStatus" class="status">&nbsp;</span>
-      </div>
-    </div>
-    
-    <!-- playback -->
-    <div id="player" class="row">
-      <div class="twelve columns">
-        <button id="play">Play Morse Code</button>
-        <p id="playStatus">
-          <span id="prevChar"></span>
-          <span id="currentChar"></span>
-          <span id="nextChar"></span>
-        </p><br>
-        <!-- audio element -->
-        <audio id="beep">
-          <source src="audio/beep.wav" type="audio/wav">
-          <source src="audio/beep.mp3" type="audio/mpeg">
-          <small>Your browser does not support HTML5 audio.</small>
-        </audio>
-      </div>
-    </div>
-    
-    <!-- controls -->
-    <div class="row controlContainer">
-      <!-- volume control -->
-      <div class="twelve columns">
-        <span id="volumeIcon" class="icon"><i class="fa fa-volume-down" aria-hidden="true"></i></span>
-        <input id="volumeControl" class="control" type="range" min="0" max="10" value="2">
-      </div>
-      <!-- speed control -->
-      <div class="twelve columns">
-        <span id="speedIcon" class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></span>&nbsp;
-        <input id="speedControl" class="control" type="range" min="5" max="20" value="10">
-      </div>
-      <div class="twelve columns">
-        <small>Control the playback volume and speed using the sliders.</small>
-      </div>
-    </div>
-    
-    <!-- character sets -->
-    <div class="row">
-      <div class="six columns charset">
-        <p>ASCII character set:</p>
-        <small>
-          a b c d e f g h i j k l m<br>
-          n o p q r s t u v w x y z<br>
-          0 1 2 3 4 5 6 7 8 9<br>
-          . , ? ! - / @ ( )
-        </small><br><br>
-      </div>
-      <div class="six columns charset">
-        <p>Morse character set:</p>
-        <strong>.</strong> <small>(dot)</small>&nbsp;
-        <strong>-</strong> <small>(dash)</small><br>
-        <small>character separator: one space<br>
-          word separator: three spaces</small>
-      </div>
-    </div>
-    
-    <!-- conversion tables -->
-    <div class="tableContainer">
-      <h5>Conversion tables</h5><br>
-      <div class="row">
-        <div class="six columns">
-         <!-- letter -->
-          <strong>Letters</strong>
-          <table id="charsTable" class="morseTable">
-            <thead>
-              <tr>
-                <th>Morse code</th>
-                <th>ASCII</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="six columns">
-         <!-- number -->
-          <strong>Numbers</strong>
-          <table id="numsTable" class="morseTable">
-            <thead>
-              <tr>
-                <th>Morse code</th>
-                <th>ASCII</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-          <!-- symbols -->
-          <strong>Symbols</strong>
-          <table id="specTable" class="morseTable">
-            <thead>
-              <tr>
-                <th>Morse code</th>
-                <th>ASCII</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    
-  </div><!-- /container -->
-    
-  <footer>
-    <small>Made by <a href="https://github.com/thavixt" target="_blank">thavixt</a>.</small>
-    <br>
-    <small>Inspired by <a href="http://youmightnotneedjquery.com/" target="_blank">You Might Not Need jQuery</a>.</small>
-    <br><br>
-  </footer>
-  
-  <!-- fetch & promise polyfill 
-  <script src="js/polyfill/fetch.js"></script>
-  <script src="js/polyfill/promise.js"></script>
-  -->
-  <script src="https://use.fontawesome.com/c62ff996b8.js"></script>
-  <script src="js/main.js"></script>
-</body>
+
+        <footer>
+            <small>Made by <a href="https://github.com/thavixt" target="_blank">thavixt</a>.</small>
+            <br>
+            <small>Inspired by <a href="http://youmightnotneedjquery.com/" target="_blank">You Might Not Need jQuery</a>.</small>
+            <br><br>
+        </footer>
+
+        <script src="https://use.fontawesome.com/c62ff996b8.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 
 </html>
